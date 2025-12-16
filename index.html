@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random String with Hint</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        h1 { font-size: 3em; color: #333; }
+        h3 { font-size: 1.5em; color: #666; margin-top: 20px; }
+        button { font-size: 1.2em; padding: 10px 20px; margin-top: 20px; cursor: pointer; }
+        #timer { font-size: 1.2em; margin-top: 20px; color: #ff0000; }
+    </style>
+</head>
+<body>
+    <h1 id="random-string"></h1>
+    <h3 id="hint"></h3>
+    <div id="timer">01:00</div>
+    <button onclick="showRandomString()">Get Another String</button>
+
+    <script>
+        // Array of strings with associated hints
+        const items = [
+            { str: "Hello123", hint: "A simple greeting with numbers" },
+            { str: "PythonRocks", hint: "Programming language + enthusiasm" },
+            { str: "OpenAI2025", hint: "AI organization + year" },
+            { str: "RandomString", hint: "Just a generic string" },
+            { str: "ChatGPT", hint: "AI assistant by OpenAI" }
+        ];
+
+        let timerInterval;
+
+        function showRandomString() {
+            // Pick a random item
+            const randomIndex = Math.floor(Math.random() * items.length);
+            const item = items[randomIndex];
+
+            // Display string and hint
+            document.getElementById('random-string').innerText = item.str;
+            document.getElementById('hint').innerText = "Hint: " + item.hint;
+
+            // Reset timer to 1 minute
+            startTimer(60);
+        }
+
+        function startTimer(seconds) {
+            clearInterval(timerInterval); // Stop any existing timer
+            let remaining = seconds;
+
+            function updateTimer() {
+                let min = String(Math.floor(remaining / 60)).padStart(2, '0');
+                let sec = String(remaining % 60).padStart(2, '0');
+                document.getElementById('timer').innerText = `${min}:${sec}`;
+
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    showRandomString(); // Show a new random string when timer ends
+                } else {
+                    remaining--;
+                }
+            }
+
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Show first random string on page load
+        showRandomString();
+    </script>
+</body>
+</html>
