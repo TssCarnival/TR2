@@ -1,48 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random String with Hint</title>
+    <title>Random Question</title>
     <style>
         body { font-family: Arial; text-align: center; margin-top: 50px; }
-        h1 { font-size: 3em; color: #333; }
-        h3 { font-size: 1.5em; color: #666; margin-top: 20px; }
+        h1 { font-size: 2.3em; color: #333; }
         button { font-size: 1.2em; padding: 10px 20px; margin-top: 20px; cursor: pointer; }
         #timer { font-size: 1.2em; margin-top: 20px; color: #ff0000; }
     </style>
 </head>
 <body>
-    <h1 id="random-string"></h1>
-    <h3 id="hint"></h3>
+    <h1 id="random-question"></h1>
     <div id="timer">01:00</div>
-    <button onclick="showRandomString()">Get Another String</button>
+    <button onclick="showRandomQuestion()">Get Another Question</button>
 
     <script>
-        // Array of strings with associated hints
-        const items = [
-            { str: "Hello123", hint: "A simple greeting with numbers" },
-            { str: "PythonRocks", hint: "Programming language + enthusiasm" },
-            { str: "OpenAI2025", hint: "AI organization + year" },
-            { str: "RandomString", hint: "Just a generic string" },
-            { str: "ChatGPT", hint: "AI assistant by OpenAI" }
+        // Array of questions (no hints)
+        const questions = [
+            "Name an object you can find in the kitchen.",
+            "Name an object you can find in the bedroom.",
+            "Name a tool used for cleaning the house.",
+            "Name an object that gives light at home.",
+            "Name an object used for sitting.",
+            "Name the animal called the king of the jungle.",
+            "Name an animal that lives in water.",
+            "Name an animal that can fly.",
+            "Name a pet animal.",
+            "Name an animal that gives us milk.",
+            "Name a natural object seen in the sky during the day.",
+            "Name a fruit that grows on a tree.",
+            "Name a flower.",
+            "Name a plant or object that gives shade.",
+            "Name an object used in summer.",
+            "Name an object you carry in your school bag.",
+            "Name an object used for writing.",
+            "Name a book used for studying.",
+            "Name an object found in a classroom.",
+            "Name an object used to play a game at school.",
+            "Name a healthy food item.",
+            "Name a red-colored fruit.",
+            "Name a green vegetable.",
+            "Name a food item eaten for breakfast.",
+            "Name a sweet food item.",
+            "Name the largest animal.",
+            "Name the national bird of your country.",
+            "Name a vehicle used for travel.",
+            "Name an object used during a festival.",
+            "Name an object that shows the day and date."
         ];
 
         let timerInterval;
 
-        function showRandomString() {
-            // Pick a random item
-            const randomIndex = Math.floor(Math.random() * items.length);
-            const item = items[randomIndex];
-
-            // Display string and hint
-            document.getElementById('random-string').innerText = item.str;
-            document.getElementById('hint').innerText = "Hint: " + item.hint;
-
-            // Reset timer to 1 minute
+        function showRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            document.getElementById("random-question").innerText = questions[randomIndex];
             startTimer(60);
         }
 
         function startTimer(seconds) {
-            clearInterval(timerInterval); // Stop any existing timer
+            clearInterval(timerInterval);
             let remaining = seconds;
 
             function updateTimer() {
@@ -52,7 +68,7 @@
 
                 if (remaining <= 0) {
                     clearInterval(timerInterval);
-                    showRandomString(); // Show a new random string when timer ends
+                    showRandomQuestion();
                 } else {
                     remaining--;
                 }
@@ -62,8 +78,8 @@
             timerInterval = setInterval(updateTimer, 1000);
         }
 
-        // Show first random string on page load
-        showRandomString();
+        // Show first question on page load
+        showRandomQuestion();
     </script>
 </body>
 </html>
