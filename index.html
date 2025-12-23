@@ -1,59 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Question</title>
+    <title>Random Question with Hints</title>
     <style>
         body { font-family: Arial; text-align: center; margin-top: 50px; }
-        h1 { font-size: 2.3em; color: #333; }
+        h1 { font-size: 2.2em; color: #333; }
+        .hint { font-size: 1.3em; color: #0066cc; margin-top: 15px; }
         button { font-size: 1.2em; padding: 10px 20px; margin-top: 20px; cursor: pointer; }
         #timer { font-size: 1.2em; margin-top: 20px; color: #ff0000; }
     </style>
 </head>
 <body>
+
     <h1 id="random-question"></h1>
+    <div class="hint" id="hint"></div>
     <div id="timer">01:00</div>
+
     <button onclick="showRandomQuestion()">Get Another Question</button>
 
     <script>
-        // Array of questions (no hints)
         const questions = [
-            "Name an object you can find in the kitchen.",
-            "Name an object you can find in the bedroom.",
-            "Name a tool used for cleaning the house.",
-            "Name an object that gives light at home.",
-            "Name an object used for sitting.",
-            "Name the animal called the king of the jungle.",
-            "Name an animal that lives in water.",
-            "Name an animal that can fly.",
-            "Name a pet animal.",
-            "Name an animal that gives us milk.",
-            "Name a natural object seen in the sky during the day.",
-            "Name a fruit that grows on a tree.",
-            "Name a flower.",
-            "Name a plant or object that gives shade.",
-            "Name an object used in summer.",
-            "Name an object you carry in your school bag.",
-            "Name an object used for writing.",
-            "Name a book used for studying.",
-            "Name an object found in a classroom.",
-            "Name an object used to play a game at school.",
-            "Name a healthy food item.",
-            "Name a red-colored fruit.",
-            "Name a green vegetable.",
-            "Name a food item eaten for breakfast.",
-            "Name a sweet food item.",
-            "Name the largest animal.",
-            "Name the national bird of your country.",
-            "Name a vehicle used for travel.",
-            "Name an object used during a festival.",
-            "Name an object that shows the day and date."
+            {
+                question: "Name the largest animal.",
+                hint: "I am big and gray with a long, long nose. I walk very slowly wherever I go."
+            },
+            {
+                question: "Name an object used for eating.",
+                hint: "I help you eat soup and rice each day. I scoop your food in an easy way."
+            },
+            {
+                question: "Name an animal with a long neck.",
+                hint: "I am very tall with a long, long neck. I eat green leaves—what do you expect?"
+            },
+            {
+                question: "Name an object used to hold food.",
+                hint: "I hold your food and do not spill. Soup or cereal I can fill."
+            },
+            {
+                question: "Name something used for drawing.",
+                hint: "I am small and colorful, used to draw. Kids love me a lot."
+            },
+            {
+                question: "Name an animal that lives in water.",
+                hint: "I live in water and love to swim. I have no legs, only fins."
+            },
+            {
+                question: "Name the national bird of India.",
+                hint: "I dance and spread my feathers wide. My colorful tail is my pride."
+            },
+            {
+                question: "Name an object used for writing.",
+                hint: "I help you write words neat and small. I leave marks on paper for all."
+            },
+            {
+                question: "Name a book used for writing.",
+                hint: "I have many pages, empty and white. You write on me from morning to night."
+            },
+            {
+                question: "Name a public vehicle.",
+                hint: "I am big and carry many people each day. I stop and go on the road my way."
+            },
+            {
+                question: "Name a fast vehicle.",
+                hint: "I have four wheels and go very fast. I take you places, near and far."
+            },
+            {
+                question: "Name an animal with stripes.",
+                hint: "I have sharp teeth and orange skin. Black stripes are all over me."
+            },
+            {
+                question: "Name an animal that hops.",
+                hint: "I hop, hop, hop and love to play. I have long ears and run away."
+            },
+            {
+                question: "Name an object used to play games.",
+                hint: "You throw me, kick me, bounce me too. I am used in many games you do."
+            },
+            {
+                question: "Name an object used to hit a ball.",
+                hint: "I help you hit the ball so far. In games, I am a star."
+            },
+            {
+                question: "Name a shiny metal.",
+                hint: "I shine and look like gold so bright. I am used for pots and plates."
+            },
+            {
+                question: "Name a board game.",
+                hint: "I am black and white with many squares. Kings and queens play games on me."
+            },
+            {
+                question: "Name an object used on a board.",
+                hint: "I write thick lines, bold and bright. On boards I work just right."
+            },
+            {
+                question: "Name an object used for measuring.",
+                hint: "I help you draw lines straight and neat. I also help you measure things."
+            },
+            {
+                question: "Name an object used to carry liquids.",
+                hint: "I hold water, oil, or juice inside. I am small and easy to carry."
+            },
+            {
+                question: "Name an object used for storage.",
+                hint: "I hold things safe inside of me. Toys or gifts fit nicely."
+            },
+            {
+                question: "Name an object used in summer.",
+                hint: "I spin around to give cool air. I help you when it’s hot."
+            },
+            {
+                question: "Name an object used after eating.",
+                hint: "I clean your hands and mouth so neat. I am used after you eat."
+            },
+            {
+                question: "Name an object that makes fire.",
+                hint: "Rub me once and I make light. I help start a fire."
+            },
+            {
+                question: "Name a toy.",
+                hint: "Kids dress me up and make me play. I am a favorite toy."
+            },
+            {
+                question: "Name something used while bathing.",
+                hint: "I make your hair clean and smell nice. You use me while bathing."
+            },
+            {
+                question: "Name something used for washing.",
+                hint: "I wash away dirt every day. I help keep you clean."
+            },
+            {
+                question: "Name something used for cleaning teeth.",
+                hint: "I help keep your teeth clean and bright. You use me morning and night."
+            },
+            {
+                question: "Name an animal that crawls.",
+                hint: "I crawl and slide without any feet. I make a hissing sound."
+            },
+            {
+                question: "Name a living being.",
+                hint: "I can walk, fly, or swim. I am a living being."
+            }
         ];
 
         let timerInterval;
 
         function showRandomQuestion() {
             const randomIndex = Math.floor(Math.random() * questions.length);
-            document.getElementById("random-question").innerText = questions[randomIndex];
+            document.getElementById("random-question").innerText = questions[randomIndex].question;
+            document.getElementById("hint").innerText = "Hint: " + questions[randomIndex].hint;
             startTimer(60);
         }
 
@@ -78,7 +172,6 @@
             timerInterval = setInterval(updateTimer, 1000);
         }
 
-        // Show first question on page load
         showRandomQuestion();
     </script>
 </body>
