@@ -1,49 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Riddle</title>
+    <title>Find the Answer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            margin: 0; 
-            padding: 20px; 
-            background-color: #f9f9f9; 
+        body {
+            font-family: "Comic Sans MS", Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(#f0fff4, #ffffff);
         }
-        h1 { 
-            font-size: 8vw;  
-            color: #333; 
-            margin: 20px 0; 
-            word-wrap: break-word;
-        }
-        button { 
-            font-size: 5vw; 
-            padding: 15px 25px; 
-            margin-top: 25px; 
-            cursor: pointer; 
+
+        /* Decorative Ribbon */
+        .ribbon {
+            height: 20px;
+            background: repeating-linear-gradient(
+                45deg,
+                #c62828,
+                #c62828 12px,
+                #ffffff 12px,
+                #ffffff 24px
+            );
             border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 7vw;
+            color: #2e7d32;
+            margin: 20px 0;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 25px;
+            border: 5px solid #c62828;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        #timer {
+            font-size: 5vw;
+            color: #c62828;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button {
+            font-size: 5vw;
+            padding: 15px 40px;
+            margin-top: 25px;
+            cursor: pointer;
+            border-radius: 35px;
             border: none;
-            background-color: #007bff;
+            background: linear-gradient(#2e7d32, #1b5e20);
             color: white;
+            box-shadow: 0 6px #0d3d14;
         }
-        #timer { 
-            font-size: 5vw; 
-            margin-top: 20px; 
-            color: #ff0000; 
+
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px #0d3d14;
         }
+
+        .decor {
+            font-size: 6vw;
+            margin-bottom: 10px;
+        }
+
         @media (min-width: 768px) {
-            h1 { font-size: 50px; }
-            button { font-size: 25px; padding: 15px 40px; }
+            h1 { font-size: 45px; }
             #timer { font-size: 25px; }
+            button { font-size: 25px; }
+            .decor { font-size: 40px; }
         }
     </style>
 </head>
+
 <body>
 
+    <div class="decor">🎄 ❄️ 🎁 ❄️ 🎄</div>
+    <div class="ribbon"></div>
+
     <h1 id="riddle">Loading...</h1>
+
     <div id="timer">01:00</div>
-    <button id="nextBtn">Next Riddle</button>
+
+    <button id="nextBtn">Next</button>
 
     <script>
         const riddles = [
@@ -82,8 +124,8 @@
         let timerInterval;
 
         function showRiddle() {
-            const randomIndex = Math.floor(Math.random() * riddles.length);
-            document.getElementById("riddle").innerText = riddles[randomIndex];
+            const index = Math.floor(Math.random() * riddles.length);
+            document.getElementById("riddle").innerText = riddles[index];
             startTimer(60);
         }
 
@@ -92,16 +134,14 @@
             let remaining = seconds;
 
             function updateTimer() {
-                let min = String(Math.floor(remaining / 60)).padStart(2, '0');
-                let sec = String(remaining % 60).padStart(2, '0');
-                document.getElementById('timer').innerText = `${min}:${sec}`;
+                document.getElementById("timer").innerText =
+                    "00:" + String(remaining).padStart(2, "0");
 
                 if (remaining <= 0) {
                     clearInterval(timerInterval);
                     showRiddle();
-                } else {
-                    remaining--;
                 }
+                remaining--;
             }
 
             updateTimer();
