@@ -1,153 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random Question with Hints</title>
+    <title>Random Riddle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial; text-align: center; margin-top: 50px; }
-        h1 { font-size: 2.2em; color: #333; }
-        .hint { font-size: 1.3em; color: #0066cc; margin-top: 15px; }
-        button { font-size: 1.2em; padding: 10px 20px; margin-top: 20px; cursor: pointer; }
-        #timer { font-size: 1.2em; margin-top: 20px; color: #ff0000; }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f9f9f9; 
+        }
+        h1 { 
+            font-size: 8vw;  
+            color: #333; 
+            margin: 20px 0; 
+            word-wrap: break-word;
+        }
+        button { 
+            font-size: 5vw; 
+            padding: 15px 25px; 
+            margin-top: 25px; 
+            cursor: pointer; 
+            border-radius: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+        }
+        #timer { 
+            font-size: 5vw; 
+            margin-top: 20px; 
+            color: #ff0000; 
+        }
+        @media (min-width: 768px) {
+            h1 { font-size: 50px; }
+            button { font-size: 25px; padding: 15px 40px; }
+            #timer { font-size: 25px; }
+        }
     </style>
 </head>
 <body>
 
-    <h1 id="random-question"></h1>
-    <div class="hint" id="hint"></div>
+    <h1 id="riddle">Loading...</h1>
     <div id="timer">01:00</div>
-
-    <button onclick="showRandomQuestion()">Get Another Question</button>
+    <button id="nextBtn">Next Riddle</button>
 
     <script>
-        const questions = [
-            {
-                question: "Name the largest animal.",
-                hint: "I am big and gray with a long, long nose. I walk very slowly wherever I go."
-            },
-            {
-                question: "Name an object used for eating.",
-                hint: "I help you eat soup and rice each day. I scoop your food in an easy way."
-            },
-            {
-                question: "Name an animal with a long neck.",
-                hint: "I am very tall with a long, long neck. I eat green leaves—what do you expect?"
-            },
-            {
-                question: "Name an object used to hold food.",
-                hint: "I hold your food and do not spill. Soup or cereal I can fill."
-            },
-            {
-                question: "Name something used for drawing.",
-                hint: "I am small and colorful, used to draw. Kids love me a lot."
-            },
-            {
-                question: "Name an animal that lives in water.",
-                hint: "I live in water and love to swim. I have no legs, only fins."
-            },
-            {
-                question: "Name the national bird of India.",
-                hint: "I dance and spread my feathers wide. My colorful tail is my pride."
-            },
-            {
-                question: "Name an object used for writing.",
-                hint: "I help you write words neat and small. I leave marks on paper for all."
-            },
-            {
-                question: "Name a book used for writing.",
-                hint: "I have many pages, empty and white. You write on me from morning to night."
-            },
-            {
-                question: "Name a public vehicle.",
-                hint: "I am big and carry many people each day. I stop and go on the road my way."
-            },
-            {
-                question: "Name a fast vehicle.",
-                hint: "I have four wheels and go very fast. I take you places, near and far."
-            },
-            {
-                question: "Name an animal with stripes.",
-                hint: "I have sharp teeth and orange skin. Black stripes are all over me."
-            },
-            {
-                question: "Name an animal that hops.",
-                hint: "I hop, hop, hop and love to play. I have long ears and run away."
-            },
-            {
-                question: "Name an object used to play games.",
-                hint: "You throw me, kick me, bounce me too. I am used in many games you do."
-            },
-            {
-                question: "Name an object used to hit a ball.",
-                hint: "I help you hit the ball so far. In games, I am a star."
-            },
-            {
-                question: "Name a shiny metal.",
-                hint: "I shine and look like gold so bright. I am used for pots and plates."
-            },
-            {
-                question: "Name a board game.",
-                hint: "I am black and white with many squares. Kings and queens play games on me."
-            },
-            {
-                question: "Name an object used on a board.",
-                hint: "I write thick lines, bold and bright. On boards I work just right."
-            },
-            {
-                question: "Name an object used for measuring.",
-                hint: "I help you draw lines straight and neat. I also help you measure things."
-            },
-            {
-                question: "Name an object used to carry liquids.",
-                hint: "I hold water, oil, or juice inside. I am small and easy to carry."
-            },
-            {
-                question: "Name an object used for storage.",
-                hint: "I hold things safe inside of me. Toys or gifts fit nicely."
-            },
-            {
-                question: "Name an object used in summer.",
-                hint: "I spin around to give cool air. I help you when it’s hot."
-            },
-            {
-                question: "Name an object used after eating.",
-                hint: "I clean your hands and mouth so neat. I am used after you eat."
-            },
-            {
-                question: "Name an object that makes fire.",
-                hint: "Rub me once and I make light. I help start a fire."
-            },
-            {
-                question: "Name a toy.",
-                hint: "Kids dress me up and make me play. I am a favorite toy."
-            },
-            {
-                question: "Name something used while bathing.",
-                hint: "I make your hair clean and smell nice. You use me while bathing."
-            },
-            {
-                question: "Name something used for washing.",
-                hint: "I wash away dirt every day. I help keep you clean."
-            },
-            {
-                question: "Name something used for cleaning teeth.",
-                hint: "I help keep your teeth clean and bright. You use me morning and night."
-            },
-            {
-                question: "Name an animal that crawls.",
-                hint: "I crawl and slide without any feet. I make a hissing sound."
-            },
-            {
-                question: "Name a living being.",
-                hint: "I can walk, fly, or swim. I am a living being."
-            }
+        const riddles = [
+            "I am big and gray with a long, long nose.\nI walk very slowly wherever I go.",
+            "I help you eat soup and rice each day.\nI scoop your food in an easy way.",
+            "I am very tall with a long, long neck.\nI eat green leaves—what do you expect?",
+            "I hold your food and do not spill.\nSoup or cereal I can fill.",
+            "I am small and colorful, used to draw.\nKids love me a lot.",
+            "I live in water and love to swim.\nI have no legs, only fins.",
+            "I dance and spread my feathers wide.\nMy colorful tail is my pride.",
+            "I help you write words neat and small.\nI leave marks on paper for all.",
+            "I have many pages, empty and white.\nYou write on me from morning to night.",
+            "I am big and carry many people each day.\nI stop and go on the road my way.",
+            "I have four wheels and go very fast.\nI take you places, near and far.",
+            "I have sharp teeth and orange skin.\nBlack stripes are all over me.",
+            "I hop, hop, hop and love to play.\nI have long ears and run away.",
+            "You throw me, kick me, bounce me too.\nI am used in many games you do.",
+            "I help you hit the ball so far.\nIn games, I am a star.",
+            "I shine and look like gold so bright.\nI am used for pots and plates.",
+            "I am black and white with many squares.\nKings and queens play games on me.",
+            "I write thick lines, bold and bright.\nOn boards I work just right.",
+            "I help you draw lines straight and neat.\nI also help you measure things.",
+            "I hold water, oil, or juice inside.\nI am small and easy to carry.",
+            "I hold things safe inside of me.\nToys or gifts fit nicely.",
+            "I spin around to give cool air.\nI help you when it’s hot.",
+            "I clean your hands and mouth so neat.\nI am used after you eat.",
+            "Rub me once and I make light.\nI help start a fire.",
+            "Kids dress me up and make me play.\nI am a favorite toy.",
+            "I make your hair clean and smell nice.\nYou use me while bathing.",
+            "I wash away dirt every day.\nI help keep you clean.",
+            "I help keep your teeth clean and bright.\nYou use me morning and night.",
+            "I crawl and slide without any feet.\nI make a hissing sound.",
+            "I can walk, fly, or swim.\nI am a living being."
         ];
 
         let timerInterval;
 
-        function showRandomQuestion() {
-            const randomIndex = Math.floor(Math.random() * questions.length);
-            document.getElementById("random-question").innerText = questions[randomIndex].question;
-            document.getElementById("hint").innerText = "Hint: " + questions[randomIndex].hint;
+        function showRiddle() {
+            const randomIndex = Math.floor(Math.random() * riddles.length);
+            document.getElementById("riddle").innerText = riddles[randomIndex];
             startTimer(60);
         }
 
@@ -162,7 +98,7 @@
 
                 if (remaining <= 0) {
                     clearInterval(timerInterval);
-                    showRandomQuestion();
+                    showRiddle();
                 } else {
                     remaining--;
                 }
@@ -172,8 +108,9 @@
             timerInterval = setInterval(updateTimer, 1000);
         }
 
-        showRandomQuestion();
+        document.getElementById("nextBtn").addEventListener("click", showRiddle);
+        window.onload = showRiddle;
     </script>
+
 </body>
 </html>
-
